@@ -1,0 +1,7 @@
+<%= form_for post, url: root_path do |f| %>
+  <%= f.text_field :title %>
+<% end %>
+
+<p class="number-to-currency"><%= number_to_currency(100_000) %></p>
+
+<%= image_tag "test.png", title: "title", class: "image_tag" %>
