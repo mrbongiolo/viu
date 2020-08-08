@@ -2,6 +2,14 @@
 
 require "viu/version"
 
+require "viu/html"
+require "viu/layout"
+require "viu/test_case"
+
+require 'viu/railtie' if defined?(Rails)
+
 module Viu
+  EMPTY_HASH = {}.freeze
+
   class Error < StandardError; end
 end
