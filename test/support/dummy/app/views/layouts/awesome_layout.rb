@@ -2,7 +2,6 @@
 
 module Layouts
   class AwesomeLayout < Viu::Layout
-    layout! nil
 
     attr_reader :header
 

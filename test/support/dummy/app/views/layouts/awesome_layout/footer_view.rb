@@ -3,7 +3,6 @@
 module Layouts
   class AwesomeLayout < Viu::Layout
     class FooterView < ApplicationView
-      layout! nil
     end
   end
 end

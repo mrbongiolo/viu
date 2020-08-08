@@ -7,7 +7,7 @@ module Viu
 
     def render_view(view, **args)
       @rendered_view = Nokogiri::HTML::Document.parse(
-        view.render_in(controller.view_context, **args)
+        view.render_in(controller.view_context, args)
       )
     end
 

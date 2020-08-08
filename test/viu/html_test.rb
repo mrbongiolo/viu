@@ -11,6 +11,7 @@ class HtmlTest < Viu::TestCase
   def test_renders_without_a_layout
     render_view(NoLayoutView.new)
 
+    assert_select('header', false)
     assert_select('h1', 'View no layout')
   end
 

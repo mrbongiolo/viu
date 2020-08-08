@@ -75,7 +75,7 @@ module Viu
       end
 
       def layout
-        @__layout
+        @__layout ||= nil
       end
 
       def template!(value)
@@ -83,7 +83,7 @@ module Viu
       end
 
       def template
-        @__template
+        @__template ||= nil
       end
     end
   end
