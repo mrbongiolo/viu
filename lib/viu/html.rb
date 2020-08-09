@@ -31,10 +31,6 @@ module Viu
       @helpers ||= controller.view_context
     end
 
-    def render_view(view, options = EMPTY_HASH)
-      render(html: view.render_in(@view_context, options))
-    end
-
     def __setup!(view_context)
       @view_context = view_context
       @lookup_context ||= view_context.lookup_context
