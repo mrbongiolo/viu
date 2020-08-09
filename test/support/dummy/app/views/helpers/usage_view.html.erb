@@ -1,4 +1,6 @@
-<%= form_for post, url: root_path do |f| %>
+<div><%= link_to "Home", posts_path %></div>
+
+<%= form_for post do |f| %>
   <%= f.text_field :title %>
 <% end %>
 

@@ -5,7 +5,7 @@ require "test_helper"
 class HtmlTest < Viu::TestCase
 
   def test_it_inherits_from_action_view_base
-    assert_equal(ActionView::Base, Viu::Html.superclass)
+    assert_equal(Viu::Html.superclass, ActionView::Base)
   end
 
   def test_renders_without_a_layout
@@ -60,24 +60,64 @@ class HtmlTest < Viu::TestCase
     assert_select('h1', 'View with HAML')
   end
 
+  def test_renders_haml_layout
+    render_view(HamlLayoutView.new)
+
+    assert_select('header', 'header from HAML')
+  end
+
   def test_renders_slim_template
     render_view(SlimView.new)
 
     assert_select('h1', 'View with slim')
   end
 
-  def test_view_has_url_helpers
-    render_view(UrlHelpersView.new)
+  def test_renders_slim_layout
+    render_view(SlimLayoutView.new)
 
-    assert_select('a[href="/"]')
+    assert_select('header', 'header from SLIM')
   end
 
-  def test_view_has_action_view_helpers
-    render_view(ActionViewHelpersView.new)
+  def test_renders_partials
+    render_view(PartialsView.new)
 
+    assert_select('div', 'this is a partial')
+    assert_select('div', 'in folder partial')
+  end
+
+  def test_renders_template_in_custom_location
+    render_view(CustomLocationTemplateView.new)
+
+    assert_select('h1', 'not the default location template')
+  end
+
+  # Helpers
+
+  def test_view_has_url_helpers
+    render_view(Helpers::UsageView.new)
+
+    assert_select('a[href="/posts"]')
     assert_select('form')
     assert_select('input#post_title', value: 'New title')
     assert_select('p.number-to-currency', '$100,000.00')
     assert_select('img.image_tag')
+  end
+
+  def test_view_has_access_to_included_helpers
+    render_view(Helpers::UsingIncludeView.new)
+
+    assert_select('div', 'very useful, such greatness')
+  end
+
+  def test_view_has_access_to_app_helpers
+    render_view(Helpers::UsingHelpersMethodView.new)
+
+    assert_select('div', 'very useful, such greatness')
+  end
+
+  def test_view_including_module
+    render_view(Helpers::IncludingModuleView.new)
+
+    assert_select('div', 'included was I in this view')
   end
 end
