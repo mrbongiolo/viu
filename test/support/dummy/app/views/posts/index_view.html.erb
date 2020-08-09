@@ -1,7 +1,7 @@
 <%= render_header_view %>
 <h1>Posts - IndexView</h1>
 <ul>
-  <%- posts.each do |post| %>
+  <%- @posts.each do |post| %>
     <li><%= link_to post.title, post %></li>
   <%- end %>
 </ul>
