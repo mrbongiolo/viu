@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require "rails"
-require "viu/helpers"
+require "viu/rendering_helpers"
 
 module Viu
   class Railtie < Rails::Railtie
