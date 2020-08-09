@@ -1,5 +1,9 @@
 # frozen_string_literal: true
 
+# disable ruby warnings:
+# https://fuzzyblog.io/blog/rails/2020/01/28/turning-off-ruby-deprecation-warnings-when-running-tests.html
+$VERBOSE=nil
+
 require "simplecov"
 SimpleCov.start
 

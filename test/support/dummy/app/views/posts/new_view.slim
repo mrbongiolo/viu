@@ -1,0 +1,13 @@
+h1
+  | Posts - NewView
+
+- flash.each do |type, message|
+  span[ class=type ]
+    = message
+
+= form_for post do |f|
+  = render_errors_if_available(post.errors)
+  = f.text_field :title
+
+.not-available
+  = @not_available_for_view.inspect
