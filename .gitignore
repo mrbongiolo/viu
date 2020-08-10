@@ -8,3 +8,4 @@
 /tmp/
 /test/support/dummy/tmp
 /test/support/dummy/log
+*.gem
