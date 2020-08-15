@@ -21,9 +21,11 @@ module Viu
       end
     end
 
+    attr_reader :controller
+
     private
 
-    attr_reader :controller, :request
+    attr_reader :request
 
     delegate :protect_against_forgery?, :form_authenticity_token, :content_security_policy?, to: :helpers
 
