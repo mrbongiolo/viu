@@ -13,6 +13,9 @@
     <header>
       <%= header %>
     </header>
+    <%- flash.each do |type, msg| %>
+      <div class="flash <%= type %>"><%= msg %></div>
+    <% end %>
     <%= yield :breadcrumb %>
     <%= yield %>
     <%= render_view ::Layouts::AwesomeLayout::FooterView.new %>

@@ -3,6 +3,8 @@
 module Posts
   class IndexView < ApplicationView
 
+    layout! Layouts::AwesomeLayout
+
     def initialize(posts:)
       @posts = posts
     end
