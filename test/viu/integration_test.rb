@@ -30,4 +30,14 @@ class IntegrationTest < ActionDispatch::IntegrationTest
     assert_select("span.alert", "There was an error")
     assert_select("ul.errors li", "Title can't be blank")
   end
+
+  test "access flash after successful create" do
+    post "/posts", params: { post: { title: "A Title" } }
+    assert_response :redirect
+
+    follow_redirect!
+
+    assert_select("h1", "Posts - IndexView")
+    assert_select(".flash.notice", "Successfully saved your awesome post!")
+  end
 end
