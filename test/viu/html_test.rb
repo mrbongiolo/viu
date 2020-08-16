@@ -5,8 +5,16 @@ require "test_helper"
 class HtmlTest < Viu::TestCase
 
   def test_it_inherits_from_action_view_base
-    assert_equal(Viu::Html.superclass, ActionView::Base)
+    assert_equal(ActionView::Base, Viu::Html.superclass)
   end
+
+  def test_default_controller_in_tests_is_application_controller
+    render_view(NoLayoutView.new)
+
+    assert_equal(ApplicationController, view_instance.controller.class)
+  end
+
+  # Rendering
 
   def test_renders_without_a_layout
     render_view(NoLayoutView.new)
