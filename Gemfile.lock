@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    viu (0.0.1)
+    viu (0.0.2)
 
 GEM
   remote: https://rubygems.org/
