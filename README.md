@@ -97,7 +97,7 @@ view or passed to the `render_view` method.
 ```ruby
 class MyView < Viu::Html
   # This will look for an application template inside app/views/layouts,
-  # it can be a html.erb or any other template language defined in your application
+  # it can be a html.erb or any other template language defined in your application.
   layout! 'layouts/application'
 end
 ```
@@ -123,15 +123,17 @@ A layout can also be a `Viu::Layout` class, in this case it will work pretty muc
 
 ```ruby
 class MyView < Viu::Html
-  layout! ::Layouts::ApplicationLayout
+  layout! Layouts::ApplicationLayout
 end
 ```
 
 `app/views/layouts/application_layout.rb`:
 ```ruby
 module Layouts
+
   # a layout needs to inherit from Viu::Layout
   class ApplicationLayout < Viu::Layout
+
     def header_text
       "This is a Viu::Layout"
     end
@@ -156,13 +158,15 @@ end
 
 Similar as the `Viu::Html` a layout will search for a template with it's name, if none is given directly.
 
-#### Defining a layout view as a `proc`
+#### Defining a layout `proc`
 
-A layout can also be declared as a `proc`, this is useful when the view wants to override a layout parameter.
+A layout can also be declared as a `proc`, this is useful when the view wants to override the layout parameters.
+The `proc` will be executed in the context of the view and the result must respond to `render_in`.
 
 ```ruby
 class MyView < Viu::Html
-  layout! proc { ::Layouts::ApplicationLayout.new(header_text: text) }
+
+  layout! proc { Layouts::ApplicationLayout.new(header_text: text) }
 
   private
 
@@ -177,6 +181,8 @@ end
 module Layouts
   class ApplicationLayout < Viu::Layout
 
+    attr_reader :header_text
+
     def initialize(header_text: 'The header text')
       @header_text = header_text
     end
@@ -189,6 +195,8 @@ end
 <html>
   <head>
     <title>A Viu::Layout</title>
+    <%= stylesheet_link_tag "application" %>
+    <%= javascript_include_tag "application" %>
   </head>
   <body>
     <header>
