@@ -96,7 +96,6 @@ view or passed to the `render_view` method.
 
 ```ruby
 class MyView < Viu::Html
-
   # This will look for an application template inside app/views/layouts,
   # it can be a html.erb or any other template language defined in your application
   layout! 'layouts/application'
@@ -124,7 +123,6 @@ A layout can also be a `Viu::Layout` class, in this case it will work pretty muc
 
 ```ruby
 class MyView < Viu::Html
-
   layout! ::Layouts::ApplicationLayout
 end
 ```
@@ -134,8 +132,7 @@ end
 module Layouts
   # a layout needs to inherit from Viu::Layout
   class ApplicationLayout < Viu::Layout
-
-    private def header_text
+    def header_text
       "This is a Viu::Layout"
     end
   end
@@ -159,9 +156,69 @@ end
 
 Similar as the `Viu::Html` a layout will search for a template with it's name, if none is given directly.
 
+#### Defining a layout view as a `proc`
+
+A layout can also be declared as a `proc`, this is useful when the view wants to override a layout parameter.
+
+```ruby
+class MyView < Viu::Html
+  layout! proc { ::Layouts::ApplicationLayout.new(header_text: text) }
+
+  private
+
+  def text
+    "Text from the view"
+  end
+end
+```
+
+`app/views/layouts/application_layout.rb`:
+```ruby
+module Layouts
+  class ApplicationLayout < Viu::Layout
+
+    def initialize(header_text: 'The header text')
+      @header_text = header_text
+    end
+  end
+end
+```
+
+`app/views/layouts/application_layout.html.erb`:
+```erb
+<html>
+  <head>
+    <title>A Viu::Layout</title>
+  </head>
+  <body>
+    <header>
+      <!-- it will render "Text from the view" here -->
+      <%= header_text %>
+    </header>
+    <%= yield %>
+  </body>
+</html>
+```
+
+#### Overriding layout on `render_view`
+
+Usually a `layout` is defined directly in the view, as most of the times a view will be used in a single "context",
+but if needed it can be overridden on the `render_view` with the `layout:` option, like so:
+
+```ruby
+# it accepts a template
+render_view MyView.new, layout: 'layouts/admin'
+
+# a Viu::Layout
+render_view MyView.new, layout: Layouts::OtherLayout
+
+# or a proc
+render_view MyView.new, layout: proc { Layouts::OtherLayout.new(title: 'Dashboard') }
+```
+
 ## Known Issues
 
-* A `Viu::Layout` doesn't work with `content_for` blocks, it's only available when using a regular layout template for now
+* A `Viu::Layout` doesn't work with `content_for` blocks, it's only available on a regular layout template for now;
 * Templates and partials require the "full" path, eg: `layouts/application` or `posts/index`.
 
 ## About
