@@ -7,7 +7,7 @@ Rails' missing View layer.
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'viu'
+gem "viu"
 ```
 
 And then execute:
@@ -27,7 +27,7 @@ $ gem install viu
 Add this to your `config/application.rb` file:
 
 ```ruby
-config.eager_load_paths << Rails.root.join('app/views')
+config.eager_load_paths << Rails.root.join("app/views")
 ```
 
 This will add the `app/views` folder to the eager load paths, as it is not loaded there by default.
@@ -63,7 +63,7 @@ end
 <h1>Awesomesauce</h1>
 <%- @posts.each do |post| %>
   <article class="<%= power_level_class(post.awesomeness) %>">
-    <h1><%= link_to post.title, post, class: 'awesome-title' %></h1>
+    <h1><%= link_to post.title, post, class: "awesome-title" %></h1>
     <p><%= post.summary %></p>
   </article>
 <%- end %>
@@ -108,8 +108,8 @@ end
 <html>
   <head>
     <title>A view view a Layout</title>
-    <%= stylesheet_link_tag 'application' %>
-    <%= javascript_include_tag 'application' %>
+    <%= stylesheet_link_tag "application" %>
+    <%= javascript_include_tag "application" %>
   </head>
   <body>
     <header>Header from the layout</header>
@@ -147,8 +147,8 @@ end
 <html>
   <head>
     <title>A Viu::Layout</title>
-    <%= stylesheet_link_tag 'application' %>
-    <%= javascript_include_tag 'application' %>
+    <%= stylesheet_link_tag "application" %>
+    <%= javascript_include_tag "application" %>
   </head>
   <body>
     <header><%= header_text %></header>
