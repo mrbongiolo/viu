@@ -99,6 +99,12 @@ class HtmlTest < Viu::TestCase
     assert_select('h1', 'not the default location template')
   end
 
+  def test_renders_template_as_a_proc
+    render_view(Posts::ShowView.new(post: ::Post.new(title: 'most amazing')))
+
+    assert_select('h1', 'MOST AMAZING')
+  end
+
   # Helpers
 
   def test_view_has_url_helpers

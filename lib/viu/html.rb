@@ -10,6 +10,8 @@ module Viu
     def render_in(view_context, options = EMPTY_HASH)
       __setup!(view_context)
 
+      return __render_template_proc if __fetch_template!.is_a?(Proc)
+
       layout = options.fetch(:layout, self.class.layout)
 
       if layout.is_a?(Class)
@@ -46,6 +48,10 @@ module Viu
       return self.class.template if self.class.template.present?
 
       self.class.template!(self.class.name.underscore)
+    end
+
+    def __render_template_proc
+      self.instance_exec(&__fetch_template!)
     end
 
     def __render_layout_class(layout)
