@@ -38,7 +38,7 @@ Probably the most common view type of the wild web lands.
 
 ### Usage
 
-`app/views/home_view.rb`:
+`app/views/awesome_view.rb`:
 ```ruby
 class AwesomeView < Viu::Html
 
@@ -87,6 +87,32 @@ in the view, as well as all `ActionView` helpers.
 Also, the view won't have access to any variables or instance variables defined in the controller, those have to be
 passed in directly, as shown in `AwesomeView.new(posts: posts)`.
 
+### ApplicationView
+
+Usually it's a common practice in rails projects to define an `ApplicationController` or `ApplicationRecord` base class
+that can be inherited from. The same can be done with views, an `ApplicationView` class is a good place to put some
+basic functionalities that should be available to all views.
+
+### Callable templates
+
+A view's template can be overridden with a `proc`. __Attention:__ currently using a callable template doesn't work with
+layouts, they will be ignored.
+
+```ruby
+# defining the view
+class HeaderView < ApplicationView
+
+  template! proc { tag.h1 @title }
+
+  def initialize(title:)
+    @title = title
+  end
+end
+
+# rendering the view
+render_view HeaderView.new(title: "Mas Gente!") # => "<h1>Mas Gente!</h1>"
+```
+
 ### Layouts
 
 By default a view won't be rendered inside a layout. To use a layout, one has to be declared, either directly on the
@@ -94,8 +120,9 @@ view or passed to the `render_view` method.
 
 #### Defining a layout template
 
+`app/views/my_view.rb`:
 ```ruby
-class MyView < Viu::Html
+class MyView < ApplicationView
   # This will look for an application template inside app/views/layouts,
   # it can be a html.erb or any other template language defined in your application.
   layout! 'layouts/application'
@@ -121,8 +148,9 @@ end
 
 A layout can also be a `Viu::Layout` class, in this case it will work pretty much like a `Viu::Html`.
 
+`app/views/my_view.rb`:
 ```ruby
-class MyView < Viu::Html
+class MyView < ApplicationView
   layout! Layouts::ApplicationLayout
 end
 ```
@@ -163,8 +191,9 @@ Similar as the `Viu::Html` a layout will search for a template with it's name, i
 A layout can also be declared as a `proc`, this is useful when the view wants to override the layout parameters.
 The `proc` will be executed in the context of the view and the result must respond to `render_in`.
 
+`app/views/my_view.rb`:
 ```ruby
-class MyView < Viu::Html
+class MyView < ApplicationView
 
   layout! proc { Layouts::ApplicationLayout.new(header_text: text) }
 
@@ -224,10 +253,19 @@ render_view MyView.new, layout: Layouts::OtherLayout
 render_view MyView.new, layout: proc { Layouts::OtherLayout.new(title: 'Dashboard') }
 ```
 
+## Viu::Json
+
+TODO
+
+## Viu::Xml
+
+TODO
+
 ## Known Issues
 
 * A `Viu::Layout` doesn't work with `content_for` blocks, it's only available on a regular layout template for now;
-* Templates and partials require the "full" path, eg: `layouts/application` or `posts/index`.
+* Templates and partials require the "full" path, eg: `layouts/application` or `posts/index`;
+* Currently layout inheritance isn't working correctly.
 
 ## About
 
