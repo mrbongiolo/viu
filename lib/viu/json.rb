@@ -15,7 +15,7 @@ module Viu
 
       attr_reader :rendering_options
 
-      def to_json(options)
+      def to_json(options = EMPTY_HASH)
         @rendering_options = options
         self.class.__json_encoder.call(json_output)
       end

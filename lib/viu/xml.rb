@@ -15,7 +15,7 @@ module Viu
 
       attr_reader :rendering_options
 
-      def to_xml(options)
+      def to_xml(options = EMPTY_HASH)
         @rendering_options = options
         self.class.__xml_encoder.call(xml_output)
       end
