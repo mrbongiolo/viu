@@ -255,11 +255,116 @@ render_view MyView.new, layout: proc { Layouts::OtherLayout.new(title: 'Dashboar
 
 ## Viu::Json
 
-TODO
+This is a simple module that can be included in your views, it will add a `to_json` method, this is called by default
+when rendering in a Rails env. The value returned from `json_output` will be the output of the view.
+
+`app/views/api/posts/resource_view.rb`:
+```ruby
+module Api
+  module Posts
+    class ResourceView
+      include Viu::Json
+
+      def initialize(post:)
+        @post = post
+      end
+
+      private
+
+      def author
+        @author ||= @post.author
+      end
+
+      def json_output
+        {
+          title: @post.title,
+          published_on: @post.published_on.to_s(:iso8601),
+          author: {
+            name: author.name,
+            avatar: author.avatar.url
+          }
+        }
+      end
+    end
+  end
+end
+```
+
+`app/controllers/api/posts_controller.rb`:
+```ruby
+def show
+  post = Post.find(params[:id])
+  render json: Api::Posts::ResourceView.new(post: post)
+end
+```
+
+The default `JSON` encoder can be overridden like so:
+
+```ruby
+class MyJsonView
+  include Viu::Json
+
+  json_encoder ->(input) { Oj.dump(input) }
+
+end
+```
 
 ## Viu::Xml
 
-TODO
+Similar to `Viu::Json` this is a simple module that can be included in your views, it will add a `to_xml` method,
+this is called by default when rendering in a Rails env. The value returned from `xml_output` will be the output
+of the view.
+
+`app/views/api/posts/resource_view.rb`:
+```ruby
+module Api
+  module Posts
+    class ResourceView
+      include Viu::Xml
+
+      def initialize(post:)
+        @post = post
+      end
+
+      private
+
+      def author
+        @author ||= @post.author
+      end
+
+      def xml_output
+        {
+          title: @post.title,
+          published_on: @post.published_on.to_s(:iso8601),
+          author: {
+            name: author.name,
+            avatar: author.avatar.url
+          }
+        }
+      end
+    end
+  end
+end
+```
+
+`app/controllers/api/posts_controller.rb`:
+```ruby
+def show
+  post = Post.find(params[:id])
+  render xml Api::Posts::ResourceView.new(post: post)
+end
+```
+
+The default `XML` encoder can be overridden like so:
+
+```ruby
+class MyXmlView
+  include Viu::Xml
+
+  xml_encoder ->(input) { Ox.dump(input) }
+
+end
+```
 
 ## Known Issues
 
