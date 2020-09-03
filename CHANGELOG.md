@@ -1,3 +1,9 @@
+## 0.0.3 2020-09-02
+
+- Added Viu::Json
+- Added Viu::Xml
+- Allow Viu::Html template! to receive a proc
+
 ## 0.0.2 2020-08-16
 
 ### Added
