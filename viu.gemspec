@@ -40,4 +40,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "simplecov", "~> 0.18.0"
   spec.add_development_dependency "haml",      "~> 5"
   spec.add_development_dependency "slim",      "~> 4"
+  spec.add_development_dependency "appraisal", "~> 2.3"
 end

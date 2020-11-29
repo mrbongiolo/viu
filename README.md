@@ -389,4 +389,7 @@ bin/setup install
 
 # running tests
 bundle exec rake test
+
+# running tests for all rails versions
+bundle exec appraisal rake test
 ```
