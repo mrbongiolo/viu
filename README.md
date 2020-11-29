@@ -380,3 +380,23 @@ Rails application, but with a few boundaries, like a View won't be able to autom
 in a controller, those have to explicitly be passed to them.
 
 The project is already been tested on a small scale in our production environment.
+
+## Development
+
+```ruby
+# install dependencies
+bin/setup install
+
+# running tests
+bundle exec rake test
+
+# running tests for all rails versions
+bundle exec appraisal rake test
+
+# releasing a new version:
+# update changelog
+# update VERSION on lib/viu/version.rb
+# run bundle exec rake release
+# create a Bump to version x.x.x commit
+# run bundle exec rake release
+```
