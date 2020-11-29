@@ -15,12 +15,15 @@ module Viu
       end
     end
 
+    RAILS_6_0 = Gem::Version.new('6.0.0')
+    private_constant :RAILS_6_0
+
     def render_in(view_context, &block)
       __setup!(view_context)
 
       rendered = Renderer.new(@lookup_context).render(self, { partial: __fetch_template!, layout: nil }, block)
 
-      if rendered.is_a?(ActionView::AbstractRenderer::RenderedTemplate)
+      if ::Rails.gem_version >= RAILS_6_0
         rendered.body
       else
         rendered
