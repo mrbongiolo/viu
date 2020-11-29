@@ -392,4 +392,11 @@ bundle exec rake test
 
 # running tests for all rails versions
 bundle exec appraisal rake test
+
+# releasing a new version:
+# update changelog
+# update VERSION on lib/viu/version.rb
+# run bundle exec rake release
+# create a Bump to version x.x.x commit
+# run bundle exec rake release
 ```

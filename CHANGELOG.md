@@ -1,3 +1,7 @@
+## 0.0.4 2020-11-29
+
+- Added support for Rails ~> 6.0.0
+
 ## 0.0.3 2020-09-02
 
 - Added Viu::Json
