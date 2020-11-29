@@ -18,7 +18,13 @@ module Viu
     def render_in(view_context, &block)
       __setup!(view_context)
 
-      Renderer.new(@lookup_context).render(self, { partial: __fetch_template!, layout: nil }, block).body
+      rendered = Renderer.new(@lookup_context).render(self, { partial: __fetch_template!, layout: nil }, block)
+
+      if rendered.is_a?(ActionView::AbstractRenderer::RenderedTemplate)
+        rendered.body
+      else
+        rendered
+      end
     end
   end
 end
