@@ -93,6 +93,18 @@ class HtmlTest < Viu::TestCase
     assert_select('div', 'in folder partial')
   end
 
+  def test_renders_partials_shared_between_views
+    render_view(PartialsView.new)
+
+    assert_select('div', 'this is a partial')
+    assert_select('div', 'in folder partial')
+
+    render_view(PartialsAgainView.new)
+
+    assert_select('div', 'this is a partial')
+    assert_select('div', 'in folder partial')
+  end
+
   def test_renders_template_in_custom_location
     render_view(CustomLocationTemplateView.new)
 

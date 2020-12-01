@@ -7,6 +7,12 @@ module Viu
 
     def initialize(*); end
 
+    module CompiledMethodContainer; end
+
+    def compiled_method_container
+      Viu::Html::CompiledMethodContainer
+    end
+
     def render_in(view_context, options = EMPTY_HASH)
       __setup!(view_context)
 
@@ -24,10 +30,6 @@ module Viu
     end
 
     attr_reader :controller
-
-    def compiled_method_container
-      self.class
-    end
 
     private
 
@@ -73,8 +75,10 @@ module Viu
     class << self
 
       def inherited(child)
+        child.include(Viu::Html::CompiledMethodContainer)
+
         if defined?(Rails) && child != Viu::Layout
-          child.include Rails.application.routes.url_helpers unless child < Rails.application.routes.url_helpers
+          child.include(Rails.application.routes.url_helpers) unless child < Rails.application.routes.url_helpers
         end
       end
 
