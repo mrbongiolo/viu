@@ -25,6 +25,10 @@ module Viu
 
     attr_reader :controller
 
+    def compiled_method_container
+      self.class
+    end
+
     private
 
     attr_reader :request

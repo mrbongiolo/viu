@@ -16,17 +16,20 @@ module Viu
     end
 
     RAILS_6_0 = Gem::Version.new('6.0.0')
-    private_constant :RAILS_6_0
+    RAILS_6_1_WITH_PRERELEASES = Gem::Version.new('6.1.0.a')
+    private_constant :RAILS_6_0, :RAILS_6_1_WITH_PRERELEASES
 
     def render_in(view_context, &block)
       __setup!(view_context)
 
-      rendered = Renderer.new(@lookup_context).render(self, { partial: __fetch_template!, layout: nil }, block)
+      rails_version = ::Rails.gem_version
 
-      if ::Rails.gem_version >= RAILS_6_0
-        rendered.body
+      if rails_version >= RAILS_6_1_WITH_PRERELEASES
+        Renderer.new(@lookup_context, layout: nil).render(__fetch_template!, self, block).body
+      elsif rails_version >= RAILS_6_0
+        Renderer.new(@lookup_context).render(self, { partial: __fetch_template!, layout: nil }, block).body
       else
-        rendered
+        Renderer.new(@lookup_context).render(self, { partial: __fetch_template!, layout: nil }, block)
       end
     end
   end
