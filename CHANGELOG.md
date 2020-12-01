@@ -1,3 +1,8 @@
+## 0.0.5 2020-12-01
+
+- Added support for Rails 6.1.0.rc1
+- Fixed bug with views not having access to compiled template methods (using #compiled_method_container)
+
 ## 0.0.4 2020-11-29
 
 - Added support for Rails ~> 6.0.0
