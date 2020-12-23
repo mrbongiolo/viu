@@ -1,3 +1,7 @@
+## 0.0.6 2020-12-23
+
+- Set content type as "text/html" when using #render_view
+
 ## 0.0.5 2020-12-01
 
 - Added support for Rails 6.1.0.rc1

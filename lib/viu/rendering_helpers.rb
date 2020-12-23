@@ -10,7 +10,7 @@ module Viu
 
     module ActionControllerHelpers
       def render_view(view, options = EMPTY_HASH)
-        self.response_body = view.render_in(view_context, options)
+        render(html: view.render_in(view_context, options))
       end
     end
   end
