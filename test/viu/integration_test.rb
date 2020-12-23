@@ -12,6 +12,8 @@ class IntegrationTest < ActionDispatch::IntegrationTest
 
     assert_select("h1", "Posts - IndexView")
     assert_select("li a", count: 2)
+
+    assert_equal("text/html", controller.rendered_format)
   end
 
   test "view does not have access to controller @ivars" do
