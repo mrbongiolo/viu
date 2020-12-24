@@ -86,7 +86,7 @@ GIT
 PATH
   remote: .
   specs:
-    viu (0.0.6)
+    viu (0.0.7)
 
 GEM
   remote: https://rubygems.org/

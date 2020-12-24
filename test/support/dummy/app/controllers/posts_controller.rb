@@ -6,6 +6,10 @@ class PostsController < ApplicationController
     render_view Posts::IndexView.new(posts: posts)
   end
 
+  def feed
+    render_view Posts::FeedView.new(posts: posts), format: :xml
+  end
+
   def show
     post = ::Post.new(title: 'A Title')
     respond_to do |format|
@@ -39,4 +43,5 @@ class PostsController < ApplicationController
   def post_params
     params.require(:post).permit(:title)
   end
+
 end
