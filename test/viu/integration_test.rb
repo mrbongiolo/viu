@@ -13,7 +13,21 @@ class IntegrationTest < ActionDispatch::IntegrationTest
     assert_select("h1", "Posts - IndexView")
     assert_select("li a", count: 2)
 
-    assert_equal("text/html", controller.rendered_format)
+    assert_equal("text/html", response.media_type)
+  end
+
+  test "rendering a view as another format" do
+    get "/posts/feed"
+    assert_response :success
+
+    assert_equal(
+      "<?xml version=\"1.0\" encoding=\"utf-8\" ?>" \
+      "<posts><post><title>First</title></post>" \
+      "<post><title>Second</title></post></posts>",
+      response.parsed_body
+    )
+
+    assert_equal("application/xml", response.media_type)
   end
 
   test "view does not have access to controller @ivars" do
@@ -49,20 +63,22 @@ class IntegrationTest < ActionDispatch::IntegrationTest
     get "/posts/1", as: :html
     assert_response :success
 
-    assert_equal('<h1>A TITLE</h1>', response.parsed_body)
+    assert_equal("<h1>A TITLE</h1>", response.parsed_body)
   end
 
   test "rendering with JSON format" do
     get "/posts/1", as: :json
     assert_response :success
 
-    assert_equal({ 'title' => 'A TITLE' }, response.parsed_body)
+    assert_equal("application/json", response.media_type)
+    assert_equal({ "title" => "A TITLE" }, response.parsed_body)
   end
 
   test "rendering with XML format" do
     get "/posts/1", as: :xml
     assert_response :success
 
-    assert_equal({ title: 'A TITLE' }.to_xml, response.parsed_body)
+    assert_equal("application/xml", response.media_type)
+    assert_equal({ title: "A TITLE" }.to_xml, response.parsed_body)
   end
 end

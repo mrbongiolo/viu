@@ -1,3 +1,7 @@
+### 0.0.7 2020-12-24
+
+- Allow #render_view to accept a :format option
+
 ## 0.0.6 2020-12-23
 
 - Set content type as "text/html" when using #render_view

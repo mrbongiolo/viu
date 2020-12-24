@@ -10,7 +10,8 @@ module Viu
 
     module ActionControllerHelpers
       def render_view(view, options = EMPTY_HASH)
-        render(html: view.render_in(view_context, options))
+        format = options.fetch(:format) { :html }
+        render(format => view.render_in(view_context, options))
       end
     end
   end
